@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import "./App.css";
+import SearchBar from "./components/SearchBar";
+import MovieList from "./components/MovieList";
+import Pagination from "./components/Pagination";
+import useMovies from "./hooks/useMovies";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const {
+    movies,
+    searchMovies,
+    currentPage,
+    setCurrentPage,
+    currentSearchTerm,
+  } = useMovies();
+  const totalPages = 100;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    searchMovies(currentSearchTerm);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="App">
+      <h1 className="text-3xl font-bold p-4">Movie Search</h1>
+      <SearchBar onSearch={searchMovies} />
+      <MovieList movies={movies} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </div>
+  );
+};
 
-export default App
+export default App;
