@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://www.omdbapi.com/";
+const API_URL = "https://www.omdbapi.com/";
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const fetchMovies = async (searchTerm: string, page: number = 1) => {
